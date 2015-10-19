@@ -6,7 +6,9 @@
   "keywords": [
     "cmsis",
     "nordic",
-    "nrf51822"
+    "nrf51822",
+    "mbed",
+    "mbed-official"
   ],
   "author": "Bogdan Marinescu <bogdan.marinescu@arm.com>",
   "repository": {
@@ -16,7 +18,7 @@
   "homepage": "https://github.com/ARMmbed/cmsis-core-nrf51822",
   "license": "Apache-2",
   "dependencies": {
-    "cmsis-core-nordic": "~0.0.1"
+    "cmsis-core-nordic": "^1.0.0"
   },
   "extraIncludes": [
     "cmsis-core-nrf51822"
