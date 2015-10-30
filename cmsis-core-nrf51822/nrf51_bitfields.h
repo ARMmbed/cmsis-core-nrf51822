@@ -1047,8 +1047,6 @@
 /* Bits 1..0 : Clock source. */
 #define CLOCK_LFCLKSRC_SRC_Pos (0UL) /*!< Position of SRC field. */
 #define CLOCK_LFCLKSRC_SRC_Msk (0x3UL << CLOCK_LFCLKSRC_SRC_Pos) /*!< Bit mask of SRC field. */
-#define CLOCK_LFCLKSRC_SRC_RC (0UL) /*!< Internal 32KiHz RC oscillator. */
-#define CLOCK_LFCLKSRC_SRC_Xtal (1UL) /*!< External 32KiHz crystal. */
 #define CLOCK_LFCLKSRC_SRC_Synth (2UL) /*!< Internal 32KiHz synthesizer from HFCLK system clock. */
 
 /* Register: CLOCK_CTIV */
