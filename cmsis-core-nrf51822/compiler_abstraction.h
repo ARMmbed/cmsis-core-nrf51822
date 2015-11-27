@@ -1,30 +1,32 @@
-/* Copyright (c) 2013, Nordic Semiconductor ASA
+/*
+ * Copyright (c) Nordic Semiconductor ASA
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
+ * Redistribution and use in source and binary forms, with or without modification,
+ * are permitted provided that the following conditions are met:
  *
- *   * Redistributions of source code must retain the above copyright notice, this
- *     list of conditions and the following disclaimer.
+ *   1. Redistributions of source code must retain the above copyright notice, this
+ *   list of conditions and the following disclaimer.
  *
- *   * Redistributions in binary form must reproduce the above copyright notice,
- *     this list of conditions and the following disclaimer in the documentation
- *     and/or other materials provided with the distribution.
+ *   2. Redistributions in binary form must reproduce the above copyright notice, this
+ *   list of conditions and the following disclaimer in the documentation and/or
+ *   other materials provided with the distribution.
  *
- *   * Neither the name of Nordic Semiconductor ASA nor the names of its
- *     contributors may be used to endorse or promote products derived from
- *     this software without specific prior written permission.
+ *   3. Neither the name of Nordic Semiconductor ASA nor the names of other
+ *   contributors to this software may be used to endorse or promote products
+ *   derived from this software without specific prior written permission.
  *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
- * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
- * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
- * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
- * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
- * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
- * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
+ * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  */
 #ifndef _COMPILER_ABSTRACTION_H
@@ -35,50 +37,63 @@
 #if defined ( __CC_ARM )
     
     #ifndef __ASM
-        #define __ASM               __asm                       /*!< asm keyword for ARM Compiler */
+        #define __ASM               __asm                       
     #endif
     
     #ifndef __INLINE
-        #define __INLINE            __inline                    /*!< inline keyword for ARM Compiler */
+        #define __INLINE            __inline                    
     #endif
     
     #ifndef __WEAK
-        #define __WEAK              __weak                      /*!< weak keyword for ARM Compiler */
+        #define __WEAK              __weak                      
     #endif
     
-    #define GET_SP()                __current_sp()              /*!> read current SP function for ARM Compiler */
+    #ifndef __ALIGN
+        #define __ALIGN(n)          __align(n)                  
+    #endif
+    
+    #define GET_SP()                __current_sp()              
   
 #elif defined ( __ICCARM__ )
     
     #ifndef __ASM
-        #define __ASM               __asm                       /*!< asm keyword for IAR Compiler */
+        #define __ASM               __asm                       
     #endif
     
     #ifndef __INLINE
-        #define __INLINE            inline                      /*!< inline keyword for IAR Compiler. Only available in High optimization mode! */
+        #define __INLINE            inline                      
     #endif
     
     #ifndef __WEAK
-        #define __WEAK              __weak                      /*!> define weak function for IAR Compiler */
+        #define __WEAK              __weak                      
+    #endif
+
+    /* Not defined for IAR since it requires a new line to work, and C preprocessor does not allow that. */
+    #ifndef __ALIGN
+        #define __ALIGN(n)          
     #endif
     
-    #define GET_SP()                __get_SP()                  /*!> read current SP function for IAR Compiler */
+    #define GET_SP()                __get_SP()                  
     
 #elif defined   ( __GNUC__ )
     
     #ifndef __ASM
-        #define __ASM               __asm__                       /*!< asm keyword for GNU Compiler */
+        #define __ASM               __asm                       
     #endif
     
     #ifndef __INLINE
-        #define __INLINE            inline                      /*!< inline keyword for GNU Compiler */
+        #define __INLINE            inline                      
     #endif
     
     #ifndef __WEAK
-        #define __WEAK              __attribute__((weak))       /*!< weak keyword for GNU Compiler */
+        #define __WEAK              __attribute__((weak))       
     #endif
     
-    #define GET_SP()                gcc_current_sp()            /*!> read current SP function for GNU Compiler */
+    #ifndef __ALIGN
+        #define __ALIGN(n)          __attribute__((aligned(n))) 
+    #endif
+    
+    #define GET_SP()                gcc_current_sp()            
 
     static inline unsigned int gcc_current_sp(void)
     {
@@ -89,18 +104,22 @@
 #elif defined   ( __TASKING__ )
         
     #ifndef __ASM        
-        #define __ASM               __asm                       /*!< asm keyword for TASKING Compiler */
+        #define __ASM               __asm                      
     #endif
     
     #ifndef __INLINE
-        #define __INLINE            inline                      /*!< inline keyword for TASKING Compiler */
+        #define __INLINE            inline                     
     #endif
     
     #ifndef __WEAK
-        #define __WEAK              __attribute__((weak))       /*!< weak keyword for TASKING Compiler */
+        #define __WEAK              __attribute__((weak))      
     #endif
     
-    #define GET_SP()                __get_MSP()                 /*!> read current SP function for TASKING Compiler */
+    #ifndef __ALIGN
+        #define __ALIGN(n)          __align(n)                  
+    #endif
+    
+    #define GET_SP()                __get_MSP()                
     
 #endif
 
