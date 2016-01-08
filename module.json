@@ -17,7 +17,7 @@
   "homepage": "https://github.com/ARMmbed/cmsis-core-nrf51822",
   "license": "Apache-2",
   "dependencies": {
-    "nrf51-sdk": "^1.0.0"
+    "nrf51-sdk": "^2.0.0"
   },
   "extraIncludes": [
     "cmsis-core-nrf51822"
